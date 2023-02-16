@@ -3,7 +3,7 @@
     <div v-else>
         <h1>Cuál es este pokemon?</h1>
         <pokemon-picture :pokemonId="pokemon.id" :showPokemon="showPokemon"></pokemon-picture>
-        <pokemon-options :pokemons="pokemonArr"></pokemon-options>
+        <pokemon-options :pokemons="pokemonArr" @selected="checkAnswer($event)"></pokemon-options>
     </div>
 </template>
 
@@ -32,6 +32,10 @@ export default {
             const randomIndex = Math.floor(Math.random() * 4)
             // console.log("ACCEDIENDO AL ARRAY: ", this.pokemonArr[randomIndex]);
             this.pokemon = this.pokemonArr[randomIndex]
+        },
+        checkAnswer(pk){
+            console.log("pokmeon page llamado ", pk);
+            this.showPokemon = true
         }
     },
     mounted(){
