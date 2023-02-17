@@ -2,8 +2,12 @@
     <h1 v-if="!pokemon"> Espere por favor... </h1>
     <div v-else>
         <h1>Cuál es este pokemon?</h1>
-        <pokemon-picture :pokemonId="pokemon.id" :showPokemon="showPokemon"></pokemon-picture>
-        <pokemon-options :pokemons="pokemonArr" @selected="checkAnswer($event)"></pokemon-options>
+        <pokemonPicture :pokemon-id="pokemon.id" :show-pokemon="showPokemon"/>
+        <pokemonOptions :pokemons="pokemonArr" @selected="checkAnswer($event)" v-if="!showAnswer" />
+        <template v-if="showAnswer" class="fade-in">
+            <h2>{{message}}</h2>
+            <button @click="newGame"> Jugar de nuevo </button>
+        </template>
     </div>
 </template>
 
@@ -23,20 +27,34 @@ export default {
         return {
             pokemonArr: [],
             pokemon: null,
-            showPokemon: false
+            showPokemon: false,
+            showAnswer: false,
+            message: ''
         }
     },
     methods:{
         async mixPokemonArr(){
             this.pokemonArr = await getPokemonOptions()
             const randomIndex = Math.floor(Math.random() * 4)
-            // console.log("ACCEDIENDO AL ARRAY: ", this.pokemonArr[randomIndex]);
             this.pokemon = this.pokemonArr[randomIndex]
         },
-        checkAnswer(pk){
-            console.log("pokmeon page llamado ", pk);
+        checkAnswer(pkSelected){
+            if (pkSelected.id == this.pokemon.id) {
+                this.message = `Bien! es ${pkSelected.name}`
+            }else{
+                this.message = `Error... es ${this.pokemon.name}`
+            }
             this.showPokemon = true
-        }
+            this.showAnswer = true
+        },
+        newGame(){
+            this.pokemonArr  = [],
+            this.pokemon     = null,
+            this.showPokemon = false,
+            this.showAnswer  = false,
+            this.mixPokemonArr()
+            
+        },
     },
     mounted(){
         this.mixPokemonArr()
