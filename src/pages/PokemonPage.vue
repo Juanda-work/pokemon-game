@@ -4,7 +4,7 @@
         <h1>Cuál es este pokemon?</h1>
         <pokemonPicture :pokemon-id="pokemon.id" :show-pokemon="showPokemon"/>
         <pokemonOptions :pokemons="pokemonArr" @selected="checkAnswer($event)" v-if="!showAnswer" />
-        <template v-if="showAnswer" class="fade-in">
+        <template v-if="showAnswer">
             <h2>{{message}}</h2>
             <button @click="newGame"> Jugar de nuevo </button>
         </template>
