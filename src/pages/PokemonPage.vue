@@ -38,9 +38,9 @@ export default {
             const randomIndex = Math.floor(Math.random() * 4)
             this.pokemon = this.pokemonArr[randomIndex]
         },
-        checkAnswer(pkSelected){
-            if (pkSelected.id == this.pokemon.id) {
-                this.message = `Bien! es ${pkSelected.name}`
+        checkAnswer(selectedPokemon){
+            if (selectedPokemon.id == this.pokemon.id) {
+                this.message = `Bien! es ${selectedPokemon.name}`
             }else{
                 this.message = `Error... es ${this.pokemon.name}`
             }
